@@ -1,0 +1,233 @@
+* {
+    -webkit-user-select: none;
+    cursor: default;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+.card.loading {
+    background: url('loading.png');
+}
+
+.card.loading h1 {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 10px;
+}
+
+.cards {
+    position: relative;
+    width: 750px;
+    height: 422px;
+    overflow: hidden;
+    background: #000;
+}
+
+.card {
+    width: 750px;
+    height: 422px;
+    background: #000;
+    color: #fff;
+    font-family: 'Bitter', serif;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.card.factoid {
+    text-align: center;
+}
+
+.card.factoid .flag {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    background-position: center;
+    background-size: cover;
+    z-index: 1;
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+    overflow: hidden;
+}
+
+.card.factoid .inner {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 50px;
+    z-index: 2;
+}
+
+.card.factoid .country {
+    font-size: 24px;
+    display: block;
+    margin: 0 auto;
+}
+
+.card.factoid .connector {
+    font-size: 18px;
+}
+
+.card.factoid .word {
+    font-size: 32px;
+    position: absolute;
+    width: 100%;
+    bottom: 50px;
+    left: 0;
+    display: block;
+}
+
+.card.factoid .word.letter {
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, .75);
+    border-radius: 200px;
+    display: block;
+    color: #000;
+    margin: 30px auto;
+    line-height: 150px;
+    font-size: 92px;
+    font-weight: bold;
+    position: static;
+    -moz-transition: all .5s;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+    -moz-box-shadow: inset 0 0 25px #000;
+    -webkit-box-shadow: inset 0 0 25px #000;
+    box-shadow: inset 0 0 25px #000;
+}
+
+.card.factoid .word.letter:hover {
+    background: #fff;
+    font-size: 112px;
+}
+
+.image {
+    width: 200px;
+    height: 200px;
+    background-position: center;
+    background-size: cover;
+    margin: 10px auto;
+    -moz-transition: all .5s;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+    -moz-box-shadow: inset 0 0 25px #000;
+    -webkit-box-shadow: inset 0 0 25px #000;
+    box-shadow: inset 0 0 25px #000;
+}
+
+.image:hover {
+    width: 220px;
+    height: 220px;
+    margin-top: 5px;
+}
+
+.image.rounded {
+    border-radius: 50%;
+}
+
+.card.factoid.spelling .word {
+    font-family: 'Handlee', cursive;
+    float: left;
+    position: absolute;
+    bottom: auto;
+    top: 170px;
+    left: 50px;
+    width: 600px;
+    padding: 20px;
+    background: url('chalkboard.jpg');
+    z-index: 1;
+    text-align: left;
+    -moz-box-shadow: inset 0 0 25px #000;
+    -webkit-box-shadow: inset 0 0 25px #000;
+    box-shadow: inset 0 0 25px #000;
+}
+
+.card.factoid.spelling .image {
+    position: absolute;
+    right: 50px;
+    z-index: 2;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: .75;
+    -moz-transition: opacity .5s;
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
+}
+
+.btn:hover {
+    opacity: 1;
+}
+
+.absolute {
+    position: absolute;
+    bottom: 10px;
+}
+
+.absolute.left {
+    left: 10px;
+    text-align: left;
+}
+
+.absolute.right {
+    right: 10px;
+    text-align: right;
+}
+
+a.faint {
+    opacity: .5;
+    -moz-transition: opacity .5s;
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
+}
+
+a.faint:hover {
+    opacity: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+#no {
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+#no p {
+    text-align: center;
+    margin: 20px 50px;
+    line-height: 1.5em;
+}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="normalise.css" />
+        <link rel="stylesheet" href="animate.css" />
+        <link rel="stylesheet" href="style.css" />
+        <link href="//fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet" />
+        <link href="//fonts.googleapis.com/css?family=Handlee" rel="stylesheet" />
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="plunja.js"></script>
+        <script src="app.js"></script>
+        <script src="imagesloaded.js"></script>
+    </head>
+
+    <body>
+        <section class="cards">
+            <article class="animated active loading card">
+                <h1>Loading</h1>
+            </article>
+
+            <article class="animated bounceInDown active hidden card" id="no">
+                <h1>Probably not.</h1>
+                <p>
+                    This &ldquo;fact&rdquo; is <strong>automatically generated</strong>
+                    by a computer (your computer actually), and just combines a bunch of
+                    <strong>random stuff</strong> in the hope it&rsquo;ll make you laugh.
+                    If you&rsquo;re offended, sorry, but it&rsquo;s almost certainly not
+                    true, whatever it is that it just said.
+                </p>
+
+                <p>
+                    Also, images (including flags) are taken from external sources, so
+                    if a flag is wrong or there&rsquo;s a problem with an image, it&rsquo;s
+                    out of our hands. This is just a bit of fun. And now that sentence has
+                    completely sucked the fun out of everything.
+                </p>
+
+                <p><a class="btn" href="#no" data-action="hide">OK, I get it</a></p>
+            </article>
+        </section>
+
+        <script type="text/html" data-template="factoid">
+            <article class="animated factoid {{ factoid.className }} card bounceInDown">
+                <div class="flag" style="background-image: url('http://www.geonames.org/flags/x/{{ country.code }}.gif');"></div>
+                <div class="inner">
+                    <span class="country">{{ country.denonym }}</span>
+                    <span class="connector">{{ factoid.connector }}</span>
+                    {% for img in factoid.images %}
+                        <div class="rounded image" style="background-image: url('{{ img }}');"></div>
+                    {% endfor %}
+                    <span class="word {{ factoid.className }}">{{ factoid.word }}</span>
+
+                    <div class="absolute left">
+                        <a class="btn" data-action="reload">Try another</a>
+                        <a class="faint" href="#no" data-action="card">Is this true?</a>
+                    </div>
+
+                    <div class="absolute right">
+                        <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" src="http://platform.twitter.com/widgets/tweet_button.1404859412.html#_=1406418378391&amp;count=horizontal&amp;dnt=true&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=http%3A%2F%2Flocalhost%3A8000%2F&amp;related=poddlefm&amp;size=m&amp;text=According to @poddleisg, {{ country.denonym }} {{ factoid.connector }} {{ factoid.word }}. Get your own fact at&amp;url=http%3A%2F%2Fpoddle.io%2Fplay%2Fsg%2F" class="twitter-share-button twitter-tweet-button twitter-share-button twitter-count-horizontal" title="Twitter Tweet Button" data-twttr-rendered="true" style="width: 107px; height: 20px;"></iframe>
+                        <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fpoddle.io%2Fplay%2Fsg%2F&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=21&amp;appId=534168566697376" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
+                    </div>
+                </div>
+            </article>
+        </script>
+
+        <script>
+            $(document).ready(
+                function() {
+                    function go() {
+                        var app = App();
+                        var templates = new TemplateRegistry();
+
+                        app.country(
+                            function(country) {
+                                var index = Math.floor(Math.random() * app.factoids.length);
+                                var factoid = app.factoids[index];
+
+                                factoid(
+                                    function(factoid) {
+                                        templates.get('factoid').on('render',
+                                            function(element) {
+                                                var loading = $('.card.loading').removeClass('active bounceInDown').addClass('bounceOutDown');
+
+                                                setTimeout(
+                                                    function() {
+                                                        var card = $(element);
+
+                                                        card.imagesLoaded().always(
+                                                            function() {
+                                                                card.appendTo('.cards');
+
+                                                                setTimeout(
+                                                                    function() {
+                                                                        loading.removeClass('bounceOutDown')
+                                                                    },
+                                                                    1000
+                                                                );
+                                                            }
+                                                        ).fail(go);
+                                                    },
+                                                    100
+                                                )
+                                            }
+                                        ).render(
+                                            {
+                                                country: country,
+                                                factoid: factoid
+                                            }
+                                        );
+                                    }
+                                );
+                            }
+                        );
+                    }
+
+                    $('.cards').on('click',
+                        function(e) {
+                            var element = $(e.target);
+                            var card = element.closest('.card');
+
+                            switch(element.attr('data-action')) {
+                                case 'reload':
+                                    card.removeClass('active bounceInDown').addClass('bounceOutDown');
+                                    setTimeout(
+                                        function() {
+                                            $('.card.loading').addClass('active bounceInDown');
+                                            setTimeout(go, 600);
+                                        },
+                                        200
+                                    );
+                                    break;
+                                case 'card':
+                                    $(element.attr('href')).removeClass('hidden');
+                                    break;
+                                case 'hide':
+                                    $(element.attr('href')).addClass('bounceOutUp');
+                                    setTimeout(
+                                        function() {
+                                            $(element.attr('href')).removeClass('bounceOutUp').addClass('hidden');
+                                        },
+                                        500
+                                    );
+
+                                    break;
+                            }
+
+                            e.preventDefault();
+                        }
+                    );
+
+                    go();
+                }
+            );
+        </script>
+    </body>
+</html>
